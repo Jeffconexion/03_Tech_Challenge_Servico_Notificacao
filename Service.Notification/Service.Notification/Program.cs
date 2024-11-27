@@ -6,7 +6,7 @@ var builder = Host.CreateApplicationBuilder(args);
 
 
 // Registrar os serviços
-builder.Services.AddSingleton<IRabbitMqService, RabbitMqService>();
+builder.Services.AddSingleton<IMessageBusService, MessageBusService>();
 builder.Services.AddSingleton<IEmailService, EmailService>();
 
 // Registrar o Worker

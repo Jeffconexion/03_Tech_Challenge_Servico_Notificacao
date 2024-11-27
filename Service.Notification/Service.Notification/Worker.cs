@@ -4,9 +4,9 @@ namespace Service.Notification
 {
     public class Worker : BackgroundService
     {
-        private readonly IRabbitMqService _rabbitMqService;
+        private readonly IMessageBusService _rabbitMqService;
 
-        public Worker(IRabbitMqService rabbitMqService)
+        public Worker(IMessageBusService rabbitMqService)
         {
             _rabbitMqService = rabbitMqService;
         }

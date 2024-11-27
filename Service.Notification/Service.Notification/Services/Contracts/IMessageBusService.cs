@@ -1,6 +1,6 @@
 ﻿namespace Service.Notification.Services.Contracts
 {
-    public interface IRabbitMqService
+    public interface IMessageBusService
     {
         Task ProcessQueue(CancellationToken cancellationToken);
     }
