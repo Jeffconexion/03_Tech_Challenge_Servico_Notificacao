@@ -1,4 +1,5 @@
 ﻿using MailKit.Net.Smtp;
+using MailKit.Security;
 using MimeKit;
 using Service.Notification.Services.Contracts;
 
@@ -8,33 +9,36 @@ namespace Service.Notification.Services
     {
         public async Task SendEmailAsync(string name, string email, string body)
         {
-            // instanciar classe de mensagem 'mimemessage' 
             var message = new MimeMessage();
 
-            //from address
-            message.From.Add(new MailboxAddress("Teste", "treinamentoaws202302@gmail.com"));
-
-            // subject
-            message.Subject = "Mensagem Web API";
-
-            //to address
+            message.From.Add(new MailboxAddress("Tech Challenge", "MS_muqbtG@trial-neqvygm8vw540p7w.mlsender.net"));
             message.To.Add(new MailboxAddress(name, email));
-
-            //body
-            message.Body = new TextPart("html")
-            {
-                Text = body,
-            };
+            message.Subject = "Notificação da Aplicação";
+            message.Body = new TextPart("html") { Text = body };
 
             using (var client = new SmtpClient())
             {
-                client.Connect("smtp.gmail.com", 587, false);
+                try
+                {
+                    Console.WriteLine("Connecting to MailerSend SMTP server...");
+                    await client.ConnectAsync("smtp.mailersend.net", 587, SecureSocketOptions.StartTls);
 
-                client.Authenticate("treinamentoaws202302@gmail.com", "hG1!k26NLtp");
+                    Console.WriteLine("Authenticating...");
+                    await client.AuthenticateAsync("MS_muqbtG@trial-neqvygm8vw540p7w.mlsender.net", "Pz6VAdfI57GHFhk3");
 
-                client.Send(message);
-
-                client.Disconnect(true);
+                    await client.SendAsync(message);
+                    Console.WriteLine("Email sent successfully.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error sending email: {ex.Message}");
+                    throw;
+                }
+                finally
+                {
+                    await client.DisconnectAsync(true);
+                    Console.WriteLine("Disconnected from SMTP server.");
+                }
             }
         }
     }
