@@ -1,38 +1,19 @@
 version: '3.4'
 
+networks:
+  app_net:
+    driver: bridge
+    name: app_net
+
 services:
   service.notification:
     image: ${DOCKER_REGISTRY-}service.notification
-    container_name: service-notification
     build:
       context: .
       dockerfile: Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-    depends_on:
-      - rabbitmq
+      - RabbitMQ_HOST=rabbitmq # Nome do container do RabbitMQ na aplicação 1
+      - RabbitMQ_PORT=5672
     networks:
-      - mynetwork
-    restart: unless-stopped
-
-  rabbitmq:
-    image: rabbitmq:3-management
-    container_name: rabbitmq
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    environment:
-      - RABBITMQ_DEFAULT_USER=guest
-      - RABBITMQ_DEFAULT_PASS=guest
-    volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
-    networks:
-      - mynetwork
-    mem_limit: 512m
-
-volumes:
-  rabbitmq_data:
-
-networks:
-  mynetwork:
-    driver: bridge
+      - app_net

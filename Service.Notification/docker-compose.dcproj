@@ -6,6 +6,9 @@
     <DockerPublishLocally>False</DockerPublishLocally>
     <ProjectGuid>7a59ee4f-4c05-4c22-a92a-de293447673f</ProjectGuid>
   </PropertyGroup>
+  <PropertyGroup>
+    <DockerServiceName>service.notification</DockerServiceName>
+  </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">
       <DependentUpon>docker-compose.yml</DependentUpon>

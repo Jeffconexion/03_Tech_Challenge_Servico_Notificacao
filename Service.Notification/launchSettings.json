@@ -4,8 +4,7 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "serviceActions": {
-        "service.notification": "StartWithoutDebugging",
-        "rabbitmq": "StartWithoutDebugging"
+        "service.notification": "StartWithoutDebugging"
       }
     }
   }
