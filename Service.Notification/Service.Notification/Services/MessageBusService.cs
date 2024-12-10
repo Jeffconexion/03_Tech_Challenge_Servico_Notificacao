@@ -18,9 +18,10 @@ namespace Service.Notification.Services
             _emailService = emailService;
             _factory = new ConnectionFactory
             {
-                HostName = "localhost",
+                HostName = "rabbitmq",
                 UserName = "guest",
-                Password = "guest"
+                Password = "guest",
+                Port = 5672
             };
         }
 
